@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: website
+  labels:
+    name: website
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: website
+  template:
+    metadata:
+      labels:
+        name: website
+    spec:
+      containers:
+      - name: website
+        image: ghcr.io/sudomateo/website:086a4f0efae3fd43f8256d7f1915abb1b65feb7e
+        ports:
+          - containerPort: 80
+            name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: website
+spec:
+  selector:
+    name: website
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: http
