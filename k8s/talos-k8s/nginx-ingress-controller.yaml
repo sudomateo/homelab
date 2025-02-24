@@ -1,0 +1,20 @@
+---
+apiVersion: charts.nginx.org/v1alpha1
+kind: NginxIngress
+metadata:
+  name: external
+  namespace: default
+spec:
+  controller:
+    image:
+      pullPolicy: IfNotPresent
+      repository: nginx/nginx-ingress
+      tag: 4.0.0-ubi
+    ingressClass:
+      name: external
+    kind: daemonset
+    nginxplus: false
+    service:
+      annotations:
+        # UniFi Network forwards ports here for external connectivity.
+        metallb.universe.tf/loadBalancerIPs: 10.0.10.50
