@@ -1,0 +1,38 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: external
+  namespace: default
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  ingressClassName: external
+  rules:
+  - host: matthewsanabria.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: website
+            port:
+              number: 8080
+  # TODO: Combine @ and www hosts into one configuration, if possible.
+  - host: www.matthewsanabria.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: website
+            port:
+              number: 8080
+  tls:
+  - hosts:
+    - matthewsanabria.dev
+    - www.matthewsanabria.dev
+    secretName: matthewsanabria-dev-crt
