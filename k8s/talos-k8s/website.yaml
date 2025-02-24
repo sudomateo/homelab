@@ -3,6 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: website
+  namespace: default
   labels:
     name: website
 spec:
@@ -17,7 +18,7 @@ spec:
     spec:
       containers:
       - name: website
-        image: ghcr.io/sudomateo/website:086a4f0efae3fd43f8256d7f1915abb1b65feb7e
+        image: ghcr.io/sudomateo/website:b51c9749472b6f8204a5c6611992e082ab8266a3
         ports:
           - containerPort: 80
             name: http
@@ -26,6 +27,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: website
+  namespace: default
 spec:
   selector:
     name: website
