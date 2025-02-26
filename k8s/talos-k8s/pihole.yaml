@@ -1,0 +1,117 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: pihole
+
+# TODO: Use 1Password to populate the value for this secret.
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: pihole-auth
+  namespace: pihole
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pihole
+  namespace: pihole
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: pihole
+  name: pihole
+  namespace: pihole
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pihole
+  template:
+    metadata:
+      labels:
+        app: pihole
+    spec:
+      containers:
+      - name: pihole
+        env:
+        - name: TZ
+          value: America/New_York
+        - name: FTLCONF_webserver_api_password
+          valueFrom:
+            secretKeyRef:
+              name: pihole-auth
+              key: api-password
+        - name: FTLCONF_dns_upstreams
+          value: 9.9.9.9;149.112.112.112;2620:fe::fe;2620:fe::9
+        image: pihole/pihole:latest
+        ports:
+        - containerPort: 53
+          name: dnsudp
+          protocol: UDP
+        - containerPort: 53
+          name: dnstcp
+          protocol: TCP
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        volumeMounts:
+        - name: pihole
+          mountPath: /etc/pihole
+      volumes:
+      - name: pihole
+        persistentVolumeClaim:
+          claimName: pihole
+      # TODO: Why is this needed? DNS doesn't work without it but
+      # DNS works for other pods.
+      dnsConfig:
+        nameservers:
+        - 9.9.9.9
+        - 149.112.112.112
+      dnsPolicy: None
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 10.0.10.99
+  name: pihole
+  namespace: pihole
+spec:
+  type: LoadBalancer
+  ports:
+  - name: dnsudp
+    nodePort: 30794
+    port: 53
+    protocol: UDP
+    targetPort: dnsudp
+  - name: dnstcp
+    nodePort: 30794
+    port: 53
+    protocol: TCP
+    targetPort: dnstcp
+  - name: http
+    nodePort: 31920
+    port: 80
+    protocol: TCP
+    targetPort: http
+  - name: https
+    nodePort: 32562
+    port: 443
+    protocol: TCP
+    targetPort: https
+  selector:
+    app: pihole
