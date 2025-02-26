@@ -3,6 +3,14 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: yeetcode
+
+# TODO: Use 1Password to populate the value for this secret.
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: yeetcode
+  namespace: yeetcode
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -27,6 +35,17 @@ spec:
         ports:
           - containerPort: 3000
             name: http
+        env:
+        - name: DISCORD_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: yeetcode
+              key: discord-token
+        - name: DISCORD_PUBLIC_KEY
+          valueFrom:
+            secretKeyRef:
+              name: yeetcode
+              key: discord-public-key
 ---
 apiVersion: v1
 kind: Service
