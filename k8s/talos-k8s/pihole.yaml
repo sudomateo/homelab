@@ -3,14 +3,6 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: pihole
-
-# TODO: Use 1Password to populate the value for this secret.
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: pihole-auth
-  namespace: pihole
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

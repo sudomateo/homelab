@@ -1,10 +1,3 @@
-# TODO: Use 1Password to populate the value for this secret.
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: yeetcode
-  namespace: default
 ---
 apiVersion: apps/v1
 kind: Deployment
