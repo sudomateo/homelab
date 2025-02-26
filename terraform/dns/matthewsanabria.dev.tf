@@ -25,3 +25,13 @@ resource "cloudflare_dns_record" "www_matthewsanabria_dev_cname" {
   proxied = true
   ttl     = 1 # Automatic TTL.
 }
+
+resource "cloudflare_dns_record" "yeetcode_www_matthewsanabria_dev_a" {
+  zone_id = data.cloudflare_zone.matthewsanabria_dev.zone_id
+  comment = local.comment
+  type    = "A"
+  name    = "yeetcode"
+  content = var.public_ipv4
+  proxied = true
+  ttl     = 1 # Automatic TTL.
+}

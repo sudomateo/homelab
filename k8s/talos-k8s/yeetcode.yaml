@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: yeetcode
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yeetcode
+  namespace: default
+  labels:
+    app: yeetcode
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yeetcode
+  template:
+    metadata:
+      labels:
+        app: yeetcode
+    spec:
+      containers:
+      - name: yeetcode
+        image: ghcr.io/sudomateo/yeetcode:latest
+        ports:
+          - containerPort: 3000
+            name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: yeetcode
+  namespace: yeetcode
+spec:
+  selector:
+    app: yeetcode
+  ports:
+  - name: http
+    port: 3000
+    protocol: TCP
+    targetPort: http
