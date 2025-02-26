@@ -8,7 +8,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: yeetcode
-  namespace: default
+  namespace: yeetcode
   labels:
     app: yeetcode
 spec:
