@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,10 +17,10 @@ spec:
     spec:
       containers:
       - name: website
-        image: ghcr.io/sudomateo/website:b51c9749472b6f8204a5c6611992e082ab8266a3 # {"$imagepolicy": "flux-system:website"}
+        image: ghcr.io/sudomateo/website:main-95a0322d-1740968517 # {"$imagepolicy": "flux-system:website"}
         ports:
-          - containerPort: 80
-            name: http
+        - containerPort: 80
+          name: http
 ---
 apiVersion: v1
 kind: Service
