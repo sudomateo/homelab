@@ -33,6 +33,11 @@ spec:
             secretKeyRef:
               name: yeetcode
               key: discord-public-key
+        - name: AXIOM_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: yeetcode
+              key: axiom-api-token
 ---
 apiVersion: v1
 kind: Service
