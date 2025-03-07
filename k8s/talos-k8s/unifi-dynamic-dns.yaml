@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unifi-dynamic-dns
+  namespace: default
+  labels:
+    app: unifi-dynamic-dns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: unifi-dynamic-dns
+  template:
+    metadata:
+      labels:
+        app: unifi-dynamic-dns
+    spec:
+      containers:
+      - name: unifi-dynamic-dns
+        image: ghcr.io/sudomateo/unifi-dynamic-dns:latest
+        ports:
+          - containerPort: 8443
+            name: https
+        env:
+        - name: TERRAFORM_CLOUD_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: unifi-dynamic-dns
+              key: terraform-cloud-address
+        - name: TERRAFORM_CLOUD_API_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: unifi-dynamic-dns
+              key: terraform-cloud-api-token
+        - name: UNIFI_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: unifi-dynamic-dns
+              key: unifi-username
+        - name: UNIFI_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: unifi-dynamic-dns
+              key: unifi-password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-dynamic-dns
+  namespace: default
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 10.0.10.69
+spec:
+  type: LoadBalancer
+  selector:
+    app: unifi-dynamic-dns
+  ports:
+  - name: https
+    port: 8443
+    protocol: TCP
+    targetPort: https
