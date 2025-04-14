@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: website
-        image: ghcr.io/sudomateo/website:main-934698e1-1741619846 # {"$imagepolicy": "flux-system:website"}
+        image: ghcr.io/sudomateo/website:main-8a317781-1744672238 # {"$imagepolicy": "flux-system:website"}
         ports:
         - containerPort: 80
           name: http
