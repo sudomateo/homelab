@@ -50,7 +50,7 @@ metadata:
   name: unifi-dynamic-dns
   namespace: default
   annotations:
-    metallb.universe.tf/loadBalancerIPs: 10.0.10.69
+    metallb.universe.tf/loadBalancerIPs: 10.0.30.69
 spec:
   type: LoadBalancer
   selector:

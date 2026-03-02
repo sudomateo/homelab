@@ -17,4 +17,4 @@ spec:
     service:
       annotations:
         # UniFi Network forwards ports here for external connectivity.
-        metallb.universe.tf/loadBalancerIPs: 10.0.10.50
+        metallb.universe.tf/loadBalancerIPs: 10.0.30.50
