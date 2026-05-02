@@ -5,7 +5,7 @@ metadata:
   name: letsencrypt-production
 spec:
   acme:
-    email: me@matthewsanabria.dev
+    email: me@matthewsanabria.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-production
@@ -20,7 +20,7 @@ metadata:
   name: letsencrypt-staging
 spec:
   acme:
-    email: me@matthewsanabria.dev
+    email: me@matthewsanabria.com
     server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-staging

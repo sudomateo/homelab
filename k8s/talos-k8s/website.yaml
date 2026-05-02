@@ -76,7 +76,7 @@ spec:
         branch: main
     commit:
       author:
-        email: me@matthewsanabria.dev
+        email: me@matthewsanabria.com
         name: "Matthew Sanabria"
       messageTemplate: "flux: automated image update"
     push:

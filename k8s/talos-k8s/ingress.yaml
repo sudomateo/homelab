@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: external
   rules:
-  - host: matthewsanabria.dev
+  - host: matthewsanabria.com
     http:
       paths:
       - path: /
@@ -21,7 +21,7 @@ spec:
             port:
               number: 8080
   # TODO: Combine @ and www hosts into one configuration, if possible.
-  - host: www.matthewsanabria.dev
+  - host: www.matthewsanabria.com
     http:
       paths:
       - path: /
@@ -31,7 +31,7 @@ spec:
             name: website
             port:
               number: 8080
-  - host: yeetcode.matthewsanabria.dev
+  - host: yeetcode.matthewsanabria.com
     http:
       paths:
       - path: /
@@ -43,9 +43,9 @@ spec:
               number: 3000
   tls:
   - hosts:
-    - matthewsanabria.dev
-    - www.matthewsanabria.dev
-    secretName: matthewsanabria-dev-crt
+    - matthewsanabria.com
+    - www.matthewsanabria.com
+    secretName: matthewsanabria-com-crt
   - hosts:
-    - yeetcode.matthewsanabria.dev
-    secretName: yeetcode-matthewsanabria-dev-crt
+    - yeetcode.matthewsanabria.com
+    secretName: yeetcode-matthewsanabria-com-crt
